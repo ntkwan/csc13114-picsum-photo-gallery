@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Container, Typography, Alert, CircularProgress, Box } from '@mui/material';
 import PhotoCard from './PhotoCard';
+import Header from './Header';
 import { fetchPhotos } from '../services/api';
 import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 
@@ -46,20 +47,7 @@ const PhotoGrid = () => {
   if (loading) {
     return (
       <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-        <header className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-          <div className="absolute inset-0 bg-black opacity-20"></div>
-          <Container className="relative py-16">
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              className="text-center text-white font-bold"
-              style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
-            >
-              photo gallery
-            </Typography>
-          </Container>
-        </header>
+        <Header subtitle={null} />
         <Container className="flex justify-center items-center pt-200 pb-20">
           <div className="text-center">
             <CircularProgress size={48} sx={{ color: '#6366f1', mb: 2 }} />
@@ -75,20 +63,7 @@ const PhotoGrid = () => {
   if (error) {
     return (
       <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-        <header className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-          <div className="absolute inset-0 bg-black opacity-20"></div>
-          <Container className="relative py-16">
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              className="text-center text-white font-bold"
-              style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
-            >
-              photo gallery
-            </Typography>
-          </Container>
-        </header>
+        <Header subtitle={null} />
         <Container className="pt-40 pb-8">
           <Alert 
             severity="error" 
@@ -108,28 +83,10 @@ const PhotoGrid = () => {
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-      <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <Container className="relative py-16">
-          <Typography 
-            variant="h4" 
-            component="h1" 
-            className="text-center text-white font-bold mb-4"
-            style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
-          >
-            photo gallery
-          </Typography>
-          <Typography 
-            variant="h6" 
-            className="text-center text-white opacity-90 max-w-2xl mx-auto"
-            style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
-          >
-            discover beautiful photography from talented artists around the world
-          </Typography>
-        </Container>
-      </header>
+      <Header />
       
+      <Container sx={{ pt: 20, pb: 0 }} maxWidth="xl">
+        <Box
           sx={{
             display: 'grid',
             gridTemplateColumns: {

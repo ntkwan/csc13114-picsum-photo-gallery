@@ -11,6 +11,7 @@ import {
   Alert 
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Header from './Header';
 import { fetchPhotoById, getPhotoUrl } from '../services/api';
 
 const PhotoDetail = () => {
@@ -41,20 +42,7 @@ const PhotoDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-        <header className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-          <div className="absolute inset-0 bg-black opacity-20"></div>
-          <Container className="relative py-16">
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              className="text-center text-white font-bold"
-              style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
-            >
-              photo gallery
-            </Typography>
-          </Container>
-        </header>
+        <Header title="photo gallery" subtitle={null} />
         <Container className="flex justify-center items-center py-20">
           <div className="text-center">
             <CircularProgress size={48} sx={{ color: '#6366f1', mb: 2 }} />
@@ -70,20 +58,7 @@ const PhotoDetail = () => {
   if (error) {
     return (
       <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-        <header className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-          <div className="absolute inset-0 bg-black opacity-20"></div>
-          <Container className="relative py-16">
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              className="text-center text-white font-bold"
-              style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
-            >
-              photo gallery
-            </Typography>
-          </Container>
-        </header>
+        <Header title="photo gallery" subtitle={null} />
         <Container className="py-8">
           <Alert 
             severity="error"
@@ -123,20 +98,7 @@ const PhotoDetail = () => {
   if (!photo) {
     return (
       <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-        <header className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-          <div className="absolute inset-0 bg-black opacity-20"></div>
-          <Container className="relative py-16">
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              className="text-center text-white font-bold"
-              style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
-            >
-              photo gallery
-            </Typography>
-          </Container>
-        </header>
+        <Header title="photo gallery" subtitle={null} />
         <Container className="py-8">
           <Alert 
             severity="info"
@@ -175,20 +137,7 @@ const PhotoDetail = () => {
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
-      <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <Container className="relative py-16">
-          <Typography 
-            variant="h4" 
-            component="h1" 
-            className="text-center text-white font-bold"
-            style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
-          >
-            photo gallery
-          </Typography>
-        </Container>
-      </header>
+      <Header title="photo gallery" subtitle={null} />
       
       <Container className="py-12">
         <IconButton 

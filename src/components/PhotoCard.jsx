@@ -17,11 +17,9 @@ const PhotoCard = ({ photo, isLast, lastElementRef }) => {
     navigate(`/photos/${photo.id}`);
   };
 
-  // calculate proper dimensions for grid layout with higher quality
-  const aspectRatio = photo.height / photo.width;
-  // use consistent sizing for grid layout
-  const cardWidth = 250; // consistent width for grid layout
-  const cardHeight = Math.min(Math.floor(cardWidth * aspectRatio), 350); // maintain aspect ratio but cap height
+  // use uniform dimensions for all cards
+  const cardWidth = 250; 
+  const cardHeight = 250; 
 
   return (
     <Card 
@@ -30,6 +28,7 @@ const PhotoCard = ({ photo, isLast, lastElementRef }) => {
       onClick={handleClick}
       sx={{
         width: '250px',
+        height: 'fit-content',
         borderRadius: 3,
         overflow: 'hidden',
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -50,8 +49,9 @@ const PhotoCard = ({ photo, isLast, lastElementRef }) => {
           alt={`photo by ${photo.author}`}
           className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
           style={{ 
-            height: cardHeight,
-            maxWidth: '100%'
+            height: `${cardHeight}px`,
+            width: `${cardWidth}px`,
+            objectFit: 'cover'
           }}
         />
         <div 
