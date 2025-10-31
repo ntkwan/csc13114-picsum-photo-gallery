@@ -15,22 +15,37 @@ export const fetchPhotos = async (page = 1, limit = 20) => {
 
 export const fetchPhotoById = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/list`);
-    if (!response.ok) {
-      throw new Error(`failed to fetch photo details: ${response.status}`);
+    // try to get photo info from the info endpoint first
+    const infoResponse = await fetch(`https://picsum.photos/id/${id}/info`);
+    if (infoResponse.ok) {
+      const photo = await infoResponse.json();
+      return {
+        ...photo,
+        title: `photo ${photo.id}`,
+        description: `beautiful photograph captured by ${photo.author}. dimensions: ${photo.width}x${photo.height}px`
+      };
     }
-    const photos = await response.json();
-    const photo = photos.find(p => p.id === id);
     
-    if (!photo) {
-      throw new Error(`photo with id ${id} not found`);
+    // fallback to searching in the list (search multiple pages)
+    for (let page = 1; page <= 10; page++) {
+      const response = await fetch(`${BASE_URL}/list?page=${page}&limit=100`);
+      if (!response.ok) continue;
+      
+      const photos = await response.json();
+      const photo = photos.find(p => p.id === id);
+      
+      if (photo) {
+        return {
+          ...photo,
+          title: `photo ${photo.id}`,
+          description: `beautiful photograph captured by ${photo.author}. dimensions: ${photo.width}x${photo.height}px`
+        };
+      }
+      
+      if (photos.length < 100) break; // no more pages
     }
-
-    return {
-      ...photo,
-      title: `photo ${photo.id}`,
-      description: `beautiful photograph captured by ${photo.author}. dimensions: ${photo.width}x${photo.height}px`
-    };
+    
+    throw new Error(`photo with id ${id} not found`);
   } catch (error) {
     console.error('error fetching photo details:', error);
     throw error;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Container, Grid, CircularProgress, Typography, Alert } from '@mui/material';
+import { Container, Typography, Alert, CircularProgress } from '@mui/material';
 import PhotoCard from './PhotoCard';
 import { fetchPhotos } from '../services/api';
 import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
@@ -45,50 +45,81 @@ const PhotoGrid = () => {
 
   if (loading) {
     return (
-      <Container className="flex justify-center items-center min-h-screen">
-        <CircularProgress />
-      </Container>
+      <div className="min-h-screen bg-gray-50">
+        <header className="bg-white shadow-sm border-b">
+          <Container className="py-6">
+            <Typography variant="h4" component="h1" className="text-center font-light">
+              photo gallery
+            </Typography>
+          </Container>
+        </header>
+        <Container className="flex justify-center items-center py-20">
+          <Typography variant="body1" color="text.secondary">
+            loading photos...
+          </Typography>
+        </Container>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Container className="py-8">
-        <Alert severity="error">{error}</Alert>
-      </Container>
+      <div className="min-h-screen bg-gray-50">
+        <header className="bg-white shadow-sm border-b">
+          <Container className="py-6">
+            <Typography variant="h4" component="h1" className="text-center font-light">
+              photo gallery
+            </Typography>
+          </Container>
+        </header>
+        <Container className="py-8">
+          <Alert severity="error">{error}</Alert>
+        </Container>
+      </div>
     );
   }
 
   return (
-    <Container className="py-8">
-      <Typography variant="h4" component="h1" className="mb-8 text-center">
-        photo gallery
-      </Typography>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm border-b">
+        <Container className="py-6">
+          <Typography variant="h4" component="h1" className="text-center font-light">
+            photo gallery
+          </Typography>
+          <Typography variant="body2" color="text.secondary" className="text-center mt-2">
+            discover beautiful photography from talented artists around the world
+          </Typography>
+        </Container>
+      </header>
       
-      <Grid container spacing={3}>
-        {photos.map((photo, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={photo.id}>
+      <Container className="py-8">
+        <div 
+          className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4"
+          style={{ columnFill: 'balance' }}
+        >
+          {photos.map((photo, index) => (
             <PhotoCard 
+              key={photo.id} 
               photo={photo}
               isLast={index === photos.length - 1}
               lastElementRef={lastElementRef}
             />
-          </Grid>
-        ))}
-      </Grid>
-
-      {isFetching && (
-        <div className="flex justify-center mt-8">
-          <CircularProgress />
+          ))}
         </div>
-      )}
 
-      {!hasMore && photos.length > 0 && (
-        <Typography variant="body2" className="text-center mt-8 text-gray-500">
-          no more photos to load
-        </Typography>
-      )}
-    </Container>
+        {isFetching && (
+          <div className="flex justify-center mt-8">
+            <CircularProgress />
+          </div>
+        )}
+
+        {!hasMore && photos.length > 0 && (
+          <Typography variant="body2" className="text-center mt-12 text-gray-500">
+            no more photos to load
+          </Typography>
+        )}
+      </Container>
+    </div>
   );
 };
 
