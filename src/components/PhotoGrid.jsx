@@ -60,7 +60,7 @@ const PhotoGrid = () => {
             </Typography>
           </Container>
         </header>
-        <Container className="flex justify-center items-center py-20">
+        <Container className="flex justify-center items-center pt-200 pb-20">
           <div className="text-center">
             <CircularProgress size={48} sx={{ color: '#6366f1', mb: 2 }} />
             <Typography variant="body1" color="text.secondary" className="mt-4">
@@ -89,7 +89,7 @@ const PhotoGrid = () => {
             </Typography>
           </Container>
         </header>
-        <Container className="py-8">
+        <Container className="pt-40 pb-8">
           <Alert 
             severity="error" 
             sx={{ 
@@ -130,8 +130,7 @@ const PhotoGrid = () => {
         </Container>
       </header>
       
-      <Container className="pt-20 pb-12" maxWidth="xl">
-        <Box
+      <Container sx={{ pt: 1, mt: 2 }} maxWidth="xl">        <Box
           sx={{
             display: 'grid',
             gridTemplateColumns: {

@@ -254,10 +254,6 @@ const PhotoDetail = () => {
               by {photo.author}
             </Typography>
             
-            <Typography variant="body1" className="mb-6" sx={{ color: '#475569', lineHeight: 1.7 }}>
-              {photo.description}
-            </Typography>
-            
             <div 
               className="grid grid-cols-2 gap-6 mt-8 p-6 rounded-2xl"
               style={{ 
