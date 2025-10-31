@@ -130,7 +130,6 @@ const PhotoGrid = () => {
         </Container>
       </header>
       
-      <Container sx={{ pt: 1, mt: 2 }} maxWidth="xl">        <Box
           sx={{
             display: 'grid',
             gridTemplateColumns: {
@@ -180,9 +179,44 @@ const PhotoGrid = () => {
         )}
 
         {!hasMore && photos.length > 0 && (
-          <Typography variant="body2" className="text-center mt-12 text-gray-500">
-            no more photos to load
-          </Typography>
+          <Box 
+            sx={{ 
+              textAlign: 'center', 
+              mt: 8, 
+              mb: 0,
+              py: 6,
+              px: 4,
+              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+              borderRadius: 4,
+              border: '1px solid #e2e8f0',
+              maxWidth: '500px',
+              mx: 'auto'
+            }}
+          >
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontWeight: 600,
+                mb: 2
+              }}
+            >
+              you've reached the end
+            </Typography>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: '#64748b',
+                lineHeight: 1.6,
+                fontSize: '0.95rem'
+              }}
+            >
+              that's all the beautiful photos we have for now. check back later for more amazing photography!
+            </Typography>
+          </Box>
         )}
       </Container>
     </div>

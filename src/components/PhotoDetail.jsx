@@ -205,7 +205,8 @@ const PhotoDetail = () => {
               background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
               transform: 'translateY(-2px)',
               boxShadow: '0 8px 15px -3px rgba(0, 0, 0, 0.1)',
-            }
+            },
+            mt: 2,
           }}
         >
           <ArrowBackIcon sx={{ fontSize: 24 }} />
