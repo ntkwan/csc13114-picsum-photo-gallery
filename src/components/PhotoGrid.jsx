@@ -85,7 +85,7 @@ const PhotoGrid = () => {
     <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
       <Header />
       
-      <Container sx={{ pt: 20, pb: 0 }} maxWidth="xl">
+      <Container sx={{ pt: 2, pb: 0 }} maxWidth="xl">
         <Box
           sx={{
             display: 'grid',

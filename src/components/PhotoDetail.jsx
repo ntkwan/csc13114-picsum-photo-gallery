@@ -11,6 +11,7 @@ import {
   Alert 
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Header from './Header';
 import { fetchPhotoById, getPhotoUrl } from '../services/api';
 
@@ -170,16 +171,49 @@ const PhotoDetail = () => {
             background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
           }}
         >
-          <CardMedia
-            component="img"
-            image={getPhotoUrl(photo.id, 1200, Math.floor(1200 * (photo.height / photo.width)))}
-            alt={photo.title}
-            className="w-full object-contain"
-            style={{ 
-              aspectRatio: `${photo.width} / ${photo.height}`,
-              maxHeight: '70vh'
-            }}
-          />
+          <div 
+            className="relative group cursor-pointer" 
+            onClick={() => photo.url && window.open(photo.url, '_blank')}
+            style={{ display: 'inline-block', width: '100%' }}
+          >
+            <CardMedia
+              component="img"
+              image={getPhotoUrl(photo.id, 1200, Math.floor(1200 * (photo.height / photo.width)))}
+              alt={photo.title}
+              className="w-full object-contain transition-all duration-300 group-hover:brightness-90"
+              style={{ 
+                aspectRatio: `${photo.width} / ${photo.height}`,
+                maxHeight: '70vh',
+                display: 'block'
+              }}
+            />
+            {photo.url && (
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(photo.url, '_blank');
+                }}
+                className="opacity-0 group-hover:opacity-100 transition-all duration-300"
+                sx={{
+                  position: 'absolute',
+                  top: '16px',
+                  right: '16px',
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  color: 'white',
+                  width: 48,
+                  height: 48,
+                  zIndex: 10,
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                  '&:hover': {
+                    background: 'rgba(0, 0, 0, 0.95)',
+                    transform: 'scale(1.1)',
+                  },
+                }}
+              >
+                <OpenInNewIcon sx={{ fontSize: 22 }} />
+              </IconButton>
+            )}
+          </div>
           <CardContent sx={{ p: 4 }}>
             <Typography 
               variant="h4" 
@@ -233,6 +267,27 @@ const PhotoDetail = () => {
                   {photo.id}
                 </Typography>
               </div>
+              {photo.url && (
+                <div className="col-span-2">
+                  <Typography 
+                    variant="body2" 
+                    sx={{ color: '#6366f1', fontWeight: 600, mb: 1 }}
+                  >
+                    original source
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#1e293b', 
+                      cursor: 'pointer',
+                      '&:hover': { color: '#6366f1', textDecoration: 'underline' }
+                    }}
+                    onClick={() => window.open(photo.url, '_blank')}
+                  >
+                    click image to view original source
+                  </Typography>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
