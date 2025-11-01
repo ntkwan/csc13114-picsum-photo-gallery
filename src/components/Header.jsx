@@ -1,6 +1,6 @@
 import { Container, Typography } from '@mui/material';
 
-const Header = ({ title = "photo gallery", subtitle = "discover beautiful photography from talented artists around the world" }) => {
+const Header = ({ title = "photo gallery", subtitle = "" }) => {
   return (
     <header className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
@@ -9,8 +9,8 @@ const Header = ({ title = "photo gallery", subtitle = "discover beautiful photog
         <Typography 
           variant="h4" 
           component="h1" 
-          className="text-center text-white font-bold mb-4 select-none"
-          style={{ fontSize: '2.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
+          className="text-center font-bold mb-4 select-none"
+          style={{ fontSize: '2.5rem', color: '#a855f7' }}
         >
           {title}
         </Typography>
