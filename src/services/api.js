@@ -1,57 +1,83 @@
-const BASE_URL = 'https://picsum.photos/v2';
+/**
+ * API service for interacting with Lorem Picsum
+ * Base URL: https://picsum.photos/
+ * List endpoint: https://picsum.photos/v2/list
+ */
+
+const BASE_URL = 'https://picsum.photos'
+const API_URL = `${BASE_URL}/v2/list`
 
 export const fetchPhotos = async (page = 1, limit = 20) => {
   try {
-    const response = await fetch(`${BASE_URL}/list?page=${page}&limit=${limit}`);
+    const response = await fetch(`${API_URL}?page=${page}&limit=${limit}`)
+    
     if (!response.ok) {
-      throw new Error(`failed to fetch photos: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
-    return await response.json();
+    
+    const photos = await response.json()
+    
+    return photos.map(photo => ({
+      ...photo,
+      thumbnail: `${BASE_URL}/id/${photo.id}/300/200`,
+      fullSize: `${BASE_URL}/id/${photo.id}/800/600`,
+      title: `Photo by ${photo.author}`,
+    }))
   } catch (error) {
-    console.error('error fetching photos:', error);
-    throw error;
+    console.error('Error fetching photos:', error)
+    throw error
   }
-};
+}
 
+/**
+ * Fetch a single photo by ID
+ * @param {string} id - Photo ID
+ * @returns {Promise<Object>} Photo object with enhanced data
+ */
 export const fetchPhotoById = async (id) => {
   try {
-    // try to get photo info from the info endpoint first
-    const infoResponse = await fetch(`https://picsum.photos/id/${id}/info`);
-    if (infoResponse.ok) {
-      const photo = await infoResponse.json();
-      return {
-        ...photo,
-        title: `photo ${photo.id}`,
-        description: `beautiful photograph captured by ${photo.author}. dimensions: ${photo.width}x${photo.height}px`
-      };
+    // Lorem Picsum doesn't have a single photo endpoint, so we fetch from the list
+    // and find the specific photo, or create it if not found
+    const response = await fetch(`${API_URL}?page=1&limit=1000`)
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
     
-    // fallback to searching in the list (search multiple pages)
-    for (let page = 1; page <= 10; page++) {
-      const response = await fetch(`${BASE_URL}/list?page=${page}&limit=100`);
-      if (!response.ok) continue;
-      
-      const photos = await response.json();
-      const photo = photos.find(p => p.id === id);
-      
-      if (photo) {
-        return {
-          ...photo,
-          title: `photo ${photo.id}`,
-          description: `beautiful photograph captured by ${photo.author}. dimensions: ${photo.width}x${photo.height}px`
-        };
+    const photos = await response.json()
+    let photo = photos.find(p => p.id === id)
+    
+    // If photo not found in the list, create a basic photo object
+    if (!photo) {
+      photo = {
+        id: id,
+        author: 'Unknown Author',
+        width: 800,
+        height: 600,
+        url: `${BASE_URL}/id/${id}/info`,
+        download_url: `${BASE_URL}/id/${id}/800/600`
       }
-      
-      if (photos.length < 100) break; // no more pages
     }
     
-    throw new Error(`photo with id ${id} not found`);
+    return {
+      ...photo,
+      thumbnail: `${BASE_URL}/id/${photo.id}/300/200`,
+      fullSize: `${BASE_URL}/id/${photo.id}/800/600`,
+      title: `Photo #${photo.id}`,
+    }
   } catch (error) {
-    console.error('error fetching photo details:', error);
-    throw error;
+    console.error('Error fetching photo by ID:', error)
+    throw error
   }
-};
+}
 
-export const getPhotoUrl = (id, width = 400, height = 300) => {
-  return `https://picsum.photos/id/${id}/${width}/${height}`;
-};
+/**
+ * Get optimized image URL for different screen sizes
+ * @param {string} id - Photo ID
+ * @param {number} width - Desired width
+ * @param {number} height - Desired height
+ * @returns {string} Optimized image URL
+ */
+export const getOptimizedImageUrl = (id, width = 400, height = 300) => {
+  return `${BASE_URL}/id/${id}/${width}/${height}`
+}
