@@ -38,31 +38,26 @@ export const fetchPhotoById = async (id) => {
   try {
     // Lorem Picsum doesn't have a single photo endpoint, so we fetch from the list
     // and find the specific photo, or create it if not found
-    const response = await fetch(`${API_URL}?page=1&limit=1000`)
+    const url = `${BASE_URL}/id/${id}/info`
+    const response = await fetch(url)
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    
-    const photos = await response.json()
-    let photo = photos.find(p => p.id === id)
-    
-    // If photo not found in the list, create a basic photo object
-    if (!photo) {
-      photo = {
+    const rawPhoto = await response.json()
+    const photo = {
         id: id,
-        author: 'Unknown Author',
-        width: 800,
-        height: 600,
-        url: `${BASE_URL}/id/${id}/info`,
-        download_url: `${BASE_URL}/id/${id}/800/600`
-      }
+        author: rawPhoto.author,
+        width: rawPhoto.width,
+        height: rawPhoto.height,
+        url: rawPhoto.url,
+        download_url: rawPhoto.download_url
     }
-    
+
     return {
       ...photo,
-      thumbnail: `${BASE_URL}/id/${photo.id}/300/200`,
-      fullSize: `${BASE_URL}/id/${photo.id}/800/600`,
+      thumbnail: rawPhoto.download_url,
+      fullSize: rawPhoto.download_url,
       title: `Photo #${photo.id}`,
     }
   } catch (error) {
